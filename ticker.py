@@ -18,10 +18,12 @@ def store_stocks():
     for stock in stocks:
         redis.set('stocks:'+stock['securitySymbol'], json.dumps(stock))
     redis.set('stocks:all', json.dumps(stocks))
-    top_gainers=get_top_gainers(json.dumps(stocks))
-    redis.set('stocks:top_gainers', top_gainers)
+    top_gainers=get_top_gainers_or_losers(json.dumps(stocks), True)
+    redis.set('stocks:top_gainers', json.dumps(top_gainers))
+    top_losers=get_top_gainers_or_losers(json.dumps(stocks), False)
+    redis.set('stocks:top_losers', json.dumps(top_losers))
 
-def get_top_gainers(json_data):
+def get_top_gainers_or_losers(json_data, flag):
     data=json.loads(json_data)
-    sorted_data=sorted(data[1:], key=lambda x : decimal.Decimal(x['percChangeClose']), reverse=True)
+    sorted_data=sorted(data[1:], key=lambda x : decimal.Decimal(x['percChangeClose']), reverse=flag)
     return sorted_data[:10]

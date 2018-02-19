@@ -13,9 +13,13 @@ def get_all_stocks():
 def get_stock(code):
     return redis.get('stocks:'+code)
 
-@app.route("/stocks/top-gainers")
-def get_top_gainers():
+@app.route("/stocks/winners")
+def get_winners():
     return redis.get('stocks:top_gainers')
+
+@app.route("/stocks/losers")
+def get_losers():
+    return redis.get('stocks:top_losers')
 
 if __name__ == "__main__":
     ticker.store_stocks()
