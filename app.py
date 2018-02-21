@@ -21,6 +21,10 @@ def get_winners():
 def get_losers():
     return redis.get('stocks:top_losers')
 
+@app.route("/stocks/active")
+def get_most_active():
+    return redis.get('stocks:most_active')
+
 if __name__ == "__main__":
     ticker.store_stocks()
     app.run()
