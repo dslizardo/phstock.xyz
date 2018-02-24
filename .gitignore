@@ -1,0 +1,7 @@
+__pycache__
+environments
+stocks.json
+*.rdb
+*.csv
+*.pyc
+instance/
