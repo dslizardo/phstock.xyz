@@ -18,10 +18,11 @@ def store_stocks():
     stocks=r.json()
     for stock in stocks:
         redis.set('stocks:'+stock['securitySymbol'], json.dumps(stock))
-    redis.set('stocks:all', json.dumps(stocks))
-    top_gainers=get_top_gainers_or_losers(json.dumps(stocks), True)
+    stocks=json.dumps(stocks)
+    redis.set('stocks:all', stocks)
+    top_gainers=get_top_gainers_or_losers(stocks, True)
     redis.set('stocks:top_gainers', json.dumps(top_gainers))
-    top_losers=get_top_gainers_or_losers(json.dumps(stocks), False)
+    top_losers=get_top_gainers_or_losers(stocks, False)
     redis.set('stocks:top_losers', json.dumps(top_losers))
 
     r=requests.get(HOST+'?method=getTopSecurity&limit=10&ajax=true', headers=HEADERS)
