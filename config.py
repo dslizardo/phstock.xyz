@@ -1,6 +1,7 @@
-REDIS_HOST = 'localhost'
-REDIS_PORT = 6379
 DEBUG = True # For development purposes only
+
+# Flask Redis
+REDIS_URL="redis://localhost:6379/0"
 
 # Flask Mail Configuration
 MAIL_SERVER = 'smtp.gmail.com'
