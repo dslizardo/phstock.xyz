@@ -1,0 +1,55 @@
+
+<!DOCTYPE html>
+<html>
+<body>
+   Hello {{name}},
+
+   <h3>Most Active Stocks</h3>
+   <table border = 1>
+   <tr>
+      <th> Stock </th>
+      <th> Price </th>
+      <th> Day Change </th>
+   </tr>
+   {% for stock in active_stocks %}
+   <tr>
+      <td> {{ stock.security_symbol }} </td>
+      <td> {{ stock.price }} </td>
+      <td> {{ stock.day_change }} </td>
+    </tr>
+   {% endfor %}
+   </table>
+
+   <h3>Top Gainers</h3>
+   <table border = 1>
+   <tr>
+      <th> Stock </th>
+      <th> Price </th>
+      <th> Day Change </th>
+   </tr>
+   {% for stock in winner_stocks %}
+   <tr>
+      <td> {{ stock.security_symbol }} </td>
+      <td> {{ stock.price }} </td>
+      <td> {{ stock.day_change }} </td>
+    </tr>
+   {% endfor %}
+   </table>
+
+   <h3>Top Losers</h3>
+   <table border = 1>
+   <tr>
+      <th> Stock </th>
+      <th> Price </th>
+      <th> Day Change </th>
+   </tr>
+   {% for stock in loser_stocks %}
+   <tr>
+      <td> {{ stock.security_symbol }} </td>
+      <td> {{ stock.price }} </td>
+      <td> {{ stock.day_change }} </td>
+    </tr>
+   {% endfor %}
+   </table>
+</body>
+</html>

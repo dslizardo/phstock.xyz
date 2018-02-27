@@ -25,7 +25,7 @@ def store_stocks():
 
     r=requests.get(HOST+'?method=getTopSecurity&limit=10&ajax=true', headers=HEADERS)
     most_active=r.json()
-    redis_store.set('stocks:most_active', json.dumps(most_active))
+    redis_store.set('stocks:most_active', json.dumps(most_active).replace('lastTradePrice','lastTradedPrice'))
 
 def get_top_gainers_or_losers(json_data, flag):
     data=json.loads(json_data)

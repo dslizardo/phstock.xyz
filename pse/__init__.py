@@ -16,5 +16,6 @@ ticker.store_stocks()
 # Initialize api endpoint
 from . import routes
 
+from .stock import Stock
 # Initialize mail
 from mail import mail_job
