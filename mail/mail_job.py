@@ -1,21 +1,21 @@
-from . import mail
+from apscheduler.schedulers.background import BackgroundScheduler
+from apscheduler.triggers.cron import CronTrigger
 from flask_mail import Message
-from pse import app, Stock
 from flask import render_template
-import schedule
+from pse import app, Stock
+from . import mail
 import time
 
-with app.app_context():
-    def mail_job():
-        active_stocks=Stock.get_stocks('most_active')
-        winner_stocks=Stock.get_stocks('top_gainers')
-        loser_stocks=Stock.get_stocks('top_losers')
+def mail_job():
+    active_stocks=Stock.get_stocks('most_active')
+    winner_stocks=Stock.get_stocks('top_gainers')
+    loser_stocks=Stock.get_stocks('top_losers')
+    with app.app_context():
         msg=Message('Test Subject 3',sender=app.config['FROM_SENDER'],  recipients = [app.config['TEST_RECIPIENT']])
         msg.html= render_template("stock_update.html", name="Daniel", active_stocks=active_stocks, winner_stocks=winner_stocks,loser_stocks=loser_stocks)
         mail.send(msg)
 
-    schedule.every().day.at(app.config['SCHEDULED_MAIL']).do(mail_job)
+scheduler = BackgroundScheduler()
 
-    while True:
-        schedule.run_pending()
-        time.sleep(1)
+scheduler.add_job(mail_job, CronTrigger.from_crontab('30 17 * * 1-5'))
+scheduler.start()
