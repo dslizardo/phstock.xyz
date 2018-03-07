@@ -5,3 +5,4 @@ stocks.json
 *.csv
 *.pyc
 instance/
+migrations/

@@ -10,3 +10,14 @@ MAIL_USERNAME = 'test@example'
 MAIL_PASSWORD = 'password'
 MAIL_USE_TLS = False
 MAIL_USE_SSL = True
+
+#Database
+POSTGRES = {
+    'user': 'pse_user',
+    'password': 'pse_password',
+    'db': 'app_pse',
+    'host': 'localhost',
+    'port': '5432',
+}
+
+POSTGRES_URL='postgresql://%(user)s:\%(pw)s@%(host)s:%(port)s/%(db)s'
