@@ -8,11 +8,29 @@ class Stock:
         self.day_change=day_change
 
     def get_stocks(key):
-        data=json.loads(redis_store.get('stocks:'+key))
-        if key == 'most_active':
-            data=data['records']
         stocks=[]
-        for stock in data:
-            s=Stock(stock['securitySymbol'],stock['lastTradedPrice'],str(stock['percChangeClose'])+'%')
-            stocks.append(s)
+        data=redis_store.get('stocks:'+key)
+        if data is not None:
+            data=json.loads(data)
+            if key == 'most_active':
+                data=data['records']
+            for stock in data:
+                s=Stock(stock['securitySymbol'],stock['lastTradedPrice'],str(stock['percChangeClose'])+'%')
+                stocks.append(s.serialize())
         return stocks
+
+    def get_stock(key):
+        data=redis_store.get('stocks:'+key)
+        if data is not None:
+            stock=json.loads(data)
+            stock=Stock(stock['securitySymbol'],stock['lastTradedPrice'],str(stock['percChangeClose'])+'%')
+            data=stock.serialize()
+        return data
+
+
+    def serialize(self):
+        return {
+            'security_symbol':self.security_symbol,
+            'price':self.price,
+            'day_change':self.day_change
+        }

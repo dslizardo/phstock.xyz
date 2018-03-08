@@ -6,3 +6,4 @@ stocks.json
 *.pyc
 instance/
 migrations/
+.idea/
