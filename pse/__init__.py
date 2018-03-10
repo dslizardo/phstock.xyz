@@ -4,11 +4,11 @@ from flask_sqlalchemy import SQLAlchemy
 from .models.base import db
 
 # Load flask configurations
-app = Flask(__name__,instance_relative_config=True)
+app = Flask(__name__, instance_relative_config=True)
 app.config.from_object('config')
 app.config.from_pyfile('config.py')
 
-#Initialize Databas
+# Initialize Databas
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://%(user)s:\
 %(password)s@%(host)s:%(port)s/%(db)s' % app.config['POSTGRES']
 
@@ -19,6 +19,7 @@ redis_store = FlaskRedis(app)
 
 # Set Timer for Stock Update
 from . import ticker
+
 ticker.store_stocks()
 
 # Initialize api endpoint
