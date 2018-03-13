@@ -13,9 +13,9 @@ MAIL_USE_SSL = True
 
 # Database
 POSTGRES = {
-    'user': 'pse_user',
-    'password': 'pse_password',
-    'db': 'app_pse',
+    'user': 'user',
+    'password': 'password',
+    'db': 'db',
     'host': 'localhost',
     'port': '5432',
 }
