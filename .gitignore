@@ -7,3 +7,4 @@ stocks.json
 instance/
 migrations/
 .idea/
+*.log
