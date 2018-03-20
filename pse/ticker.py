@@ -1,6 +1,7 @@
 from . import redis_store
+from apscheduler.schedulers.background import BackgroundScheduler
+from apscheduler.triggers.cron import CronTrigger
 import requests
-import threading
 import json
 import datetime
 import decimal
@@ -10,7 +11,12 @@ HEADERS = {'Referer': HOST}
 
 
 def store_stocks():
-    threading.Timer(60.0, store_stocks).start()
+    scheduler = BackgroundScheduler()
+    scheduler.add_job(retrieve_stocks, CronTrigger.from_crontab('* 9-16 * * 1-5'))
+    scheduler.start()
+
+
+def retrieve_stocks():
     print("Getting new stocks " + str(datetime.datetime.now()))
     r = requests.get(HOST + '?method=getSecuritiesAndIndicesForPublic&ajax=true', headers=HEADERS)
     stocks = r.json()
