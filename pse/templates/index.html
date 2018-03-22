@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>PHStock REST API</title>
+    <meta charset=utf-8>
+    <link rel=stylesheet type=text/css href="/static/style.css">
+    <link rel="shortcut icon" href="/static/favicon.ico">
+    <script type=text/javascript
+      src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+      <style type=text/css>
+        h1 { margin: 0 0 30px 0; background: url(/static/logo.png) no-repeat center; height: 165px; }
+        h1 span, p.tagline { display: none; }
+      </style>
+      <script type=text/javascript>
+        $(function() {
+          $('h1').bind('mousedown contextmenu', function(event) {
+            if (event.button != 2)
+              return;
+            var box = $('div.logohint');
+            if (!box.is(':visible'))
+              box.animate({'height': 'show', 'opacity': 'show'}, 100);
+            event.preventDefault();
+            event.returnValue = false;
+            return false;
+          });
+        });
+      </script>
+</head>
+<body>
+    <div class=box>
+      <h2>PHStock.xyz</h2>
+        <blockquote>
+          A simple JSON API for PSE
+        </blockquote>
+      <h2>Usage</h2>
+      <ul>
+          <li>Get All Stocks</li>
+          <pre><a href="http://phstock.xyz/stocks">http://phstock.xyz/stocks</a></pre>
+          <li>Most Active Stocks</li>
+          <pre>http://phstock.xyz/stocks/active</pre>
+          <li>Top Gainers Stocks</li>
+          <pre>http://phstock.xyz/stocks/winners</pre>
+          <li>Top Losers Stocks</li>
+          <pre>http://phstock.xyz/stocks/losers</pre>
+      </ul>
+    <a href="https://github.com/dslizardo/pse-utils-api"><img style="position: fixed; top: 0; right: 0; border: 0;"
+      src="http://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png" alt="Fork me on GitHub"></a>
+
+      <p class=footer>
+        &copy; Copyright 2018 by <a href=https://github.com/dslizardo>Daniel Lizardo</a>
+    </div>
+</body>
+</html>

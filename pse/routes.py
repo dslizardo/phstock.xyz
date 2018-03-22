@@ -6,6 +6,7 @@ from .response import Response
 from .models.email import Email
 from datetime import datetime
 from validate_email import validate_email
+from flask import render_template
 
 
 @app.route("/stocks")
@@ -49,6 +50,11 @@ def subscribe(email):
     db.session.add(register_email)
     db.session.commit()
     return jsonify("OK")
+
+
+@app.route("/")
+def index():
+    return render_template('index.html')
 
 
 @app.teardown_appcontext
