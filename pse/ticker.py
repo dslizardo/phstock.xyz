@@ -24,7 +24,7 @@ def retrieve_stocks():
     for stock in stocks:
         stock['price_as_of']=price_as_of
         redis_store.set('stocks:' + stock['securitySymbol'], json.dumps(stock))
-    stocks = json.dumps(stocks)
+    stocks = json.dumps(stocks[1:])
     redis_store.set('stocks:all', stocks)
     top_gainers = get_top_gainers_or_losers(stocks, True)
     redis_store.set('stocks:top_gainers', json.dumps(top_gainers))
