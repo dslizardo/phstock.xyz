@@ -12,7 +12,7 @@ HEADERS = {'Referer': HOST}
 
 def store_stocks():
     scheduler = BackgroundScheduler()
-    scheduler.add_job(retrieve_stocks, CronTrigger.from_crontab('* 9-16 * * 1-5'))
+    scheduler.add_job(retrieve_stocks, CronTrigger.from_crontab('* 9-16 * * 1-6'))
     scheduler.start()
 
 
@@ -20,7 +20,9 @@ def retrieve_stocks():
     print("Getting new stocks " + str(datetime.datetime.now()))
     r = requests.get(HOST + '?method=getSecuritiesAndIndicesForPublic&ajax=true', headers=HEADERS)
     stocks = r.json()
+    price_as_of=stocks[0]['securityAlias']
     for stock in stocks:
+        stock['price_as_of']=price_as_of
         redis_store.set('stocks:' + stock['securitySymbol'], json.dumps(stock))
     stocks = json.dumps(stocks)
     redis_store.set('stocks:all', stocks)
