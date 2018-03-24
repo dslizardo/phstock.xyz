@@ -12,7 +12,7 @@ HEADERS = {'Referer': HOST}
 
 def store_stocks():
     scheduler = BackgroundScheduler()
-    scheduler.add_job(retrieve_stocks, CronTrigger.from_crontab('* 9-16 * * 1-6'))
+    scheduler.add_job(retrieve_stocks, CronTrigger.from_crontab('* 9-16 * * 1-5'))
     scheduler.start()
 
 
