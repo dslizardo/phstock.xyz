@@ -12,7 +12,7 @@ HEADERS = {'Referer': HOST}
 
 def store_stocks():
     scheduler = BackgroundScheduler()
-    scheduler.add_job(retrieve_stocks, CronTrigger.from_crontab('* 9-16 * * 1-5'))
+    scheduler.add_job(retrieve_stocks, CronTrigger.from_crontab('* 9-16 * * 0-6'))
     scheduler.start()
 
 
@@ -32,7 +32,9 @@ def retrieve_stocks():
     redis_store.set('stocks:top_losers', json.dumps(top_losers))
 
     r = requests.get(HOST + '?method=getTopSecurity&limit=10&ajax=true', headers=HEADERS)
-    most_active = r.json()
+    most_active = (r.json())['records']
+    for stock in most_active:
+        stock['price_as_of']=price_as_of
     redis_store.set('stocks:most_active', json.dumps(most_active).replace('lastTradePrice', 'lastTradedPrice'))
 
 

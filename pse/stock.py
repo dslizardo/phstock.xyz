@@ -14,8 +14,6 @@ class Stock:
         data = redis_store.get('stocks:' + key)
         if data is not None:
             data = json.loads(data)
-            if key == 'most_active':
-                data = data['records']
             for stock in data:
                 s = Stock(stock['securitySymbol'], stock['lastTradedPrice'], str(stock['percChangeClose']) + '%', stock['price_as_of'])
                 stocks.append(s.serialize())
