@@ -21,3 +21,6 @@ POSTGRES = {
 }
 
 POSTGRES_URL = 'postgresql://%(user)s:\%(pw)s@%(host)s:%(port)s/%(db)s'
+
+#For development only
+CRON='* 9-16 * * 0-6'

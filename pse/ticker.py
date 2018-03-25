@@ -1,6 +1,7 @@
 from . import redis_store
 from apscheduler.schedulers.background import BackgroundScheduler
 from apscheduler.triggers.cron import CronTrigger
+from . import app
 import requests
 import json
 import datetime
@@ -12,7 +13,7 @@ HEADERS = {'Referer': HOST}
 
 def store_stocks():
     scheduler = BackgroundScheduler()
-    scheduler.add_job(retrieve_stocks, CronTrigger.from_crontab('* 9-16 * * 0-6'))
+    scheduler.add_job(retrieve_stocks, CronTrigger.from_crontab(app.config['CRON']))
     scheduler.start()
 
 
