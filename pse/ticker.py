@@ -1,6 +1,7 @@
 from . import redis_store
 from apscheduler.schedulers.background import BackgroundScheduler
 from apscheduler.triggers.cron import CronTrigger
+from apscheduler.executors.pool import ThreadPoolExecutor, ProcessPoolExecutor
 from . import app
 import requests
 import json
@@ -10,9 +11,19 @@ import decimal
 HOST = 'http://www.pse.com.ph/stockMarket/home.html'
 HEADERS = {'Referer': HOST}
 
+executors = {
+    'default': ThreadPoolExecutor(20),
+    'processpool': ProcessPoolExecutor(5)
+}
+
+job_defaults = {
+    'coalesce': True,
+    'max_instances': 3
+}
+
 
 def store_stocks():
-    scheduler = BackgroundScheduler()
+    scheduler = BackgroundScheduler(executors=executors, job_defaults=job_defaults)
     scheduler.add_job(retrieve_stocks, CronTrigger.from_crontab(app.config['CRON']))
     scheduler.start()
 
