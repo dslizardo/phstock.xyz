@@ -33,21 +33,22 @@ def retrieve_stocks():
     try:
         r = requests.get(HOST + '?method=getSecuritiesAndIndicesForPublic&ajax=true', headers=HEADERS)
         stocks = r.json()
-        price_as_of=stocks[0]['securityAlias']
-        for stock in stocks:
-            stock['price_as_of']=price_as_of
-            redis_store.set('stocks:' + stock['securitySymbol'], json.dumps(stock))
-        stocks = json.dumps(stocks[1:])
-        redis_store.set('stocks:all', stocks)
-        top_gainers = get_top_gainers_or_losers(stocks, True)
-        redis_store.set('stocks:top_gainers', json.dumps(top_gainers))
-        top_losers = get_top_gainers_or_losers(stocks, False)
-        redis_store.set('stocks:top_losers', json.dumps(top_losers))
-        r = requests.get(HOST + '?method=getTopSecurity&limit=10&ajax=true', headers=HEADERS)
-        most_active = (r.json())['records']
-        for stock in most_active:
-            stock['price_as_of']=price_as_of
-        redis_store.set('stocks:most_active', json.dumps(most_active).replace('lastTradePrice', 'lastTradedPrice'))
+        if len(stocks) != 0:
+            price_as_of=stocks[0]['securityAlias']
+            for stock in stocks:
+                stock['price_as_of']=price_as_of
+                redis_store.set('stocks:' + stock['securitySymbol'], json.dumps(stock))
+            stocks = json.dumps(stocks[1:])
+            redis_store.set('stocks:all', stocks)
+            top_gainers = get_top_gainers_or_losers(stocks, True)
+            redis_store.set('stocks:top_gainers', json.dumps(top_gainers))
+            top_losers = get_top_gainers_or_losers(stocks, False)
+            redis_store.set('stocks:top_losers', json.dumps(top_losers))
+            r = requests.get(HOST + '?method=getTopSecurity&limit=10&ajax=true', headers=HEADERS)
+            most_active = (r.json())['records']
+            for stock in most_active:
+                stock['price_as_of']=price_as_of
+            redis_store.set('stocks:most_active', json.dumps(most_active).replace('lastTradePrice', 'lastTradedPrice'))
     except requests.exceptions.Timeout as err:
         print(err)
 
