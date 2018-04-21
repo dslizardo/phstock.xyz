@@ -21,5 +21,5 @@ def mail_job():
 
 scheduler = BackgroundScheduler()
 
-scheduler.add_job(mail_job, CronTrigger.from_crontab('30 17 * * 1-5'))
+scheduler.add_job(mail_job, CronTrigger.from_crontab(app.config['MAIL_CRON']))
 scheduler.start()
