@@ -21,6 +21,8 @@ redis_store = FlaskRedis(app)
 from . import ticker
 
 ticker.store_stocks()
+# Get latest stocks at first run
+ticker.retrieve_stocks()
 
 # Initialize api endpoint
 from . import routes

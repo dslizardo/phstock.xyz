@@ -43,7 +43,7 @@ def get_most_active():
 def subscribe(email):
     if not validate_email(email):
         return jsonify("Email is not valid")
-    email_exists =  Email.query.filter_by(email=email).first()
+    email_exists = Email.query.filter_by(email=email).first()
     if email_exists is not None:
         return jsonify("Email exists")
     register_email = Email(email=email, created_date=datetime.now())

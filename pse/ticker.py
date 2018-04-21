@@ -34,9 +34,9 @@ def retrieve_stocks():
         r = requests.get(HOST + '?method=getSecuritiesAndIndicesForPublic&ajax=true', headers=HEADERS, timeout=5)
         stocks = r.json()
         if len(stocks) != 0:
-            price_as_of=stocks[0]['securityAlias']
+            price_as_of = stocks[0]['securityAlias']
             for stock in stocks:
-                stock['price_as_of']=price_as_of
+                stock['price_as_of'] = price_as_of
                 redis_store.set('stocks:' + stock['securitySymbol'], json.dumps(stock))
             stocks = json.dumps(stocks[1:])
             redis_store.set('stocks:all', stocks)
@@ -47,10 +47,11 @@ def retrieve_stocks():
             r = requests.get(HOST + '?method=getTopSecurity&limit=10&ajax=true', headers=HEADERS)
             most_active = (r.json())['records']
             for stock in most_active:
-                stock['price_as_of']=price_as_of
+                stock['price_as_of'] = price_as_of
             redis_store.set('stocks:most_active', json.dumps(most_active).replace('lastTradePrice', 'lastTradedPrice'))
     except requests.exceptions.Timeout as err:
         print(err)
+
 
 def get_top_gainers_or_losers(json_data, flag):
     data = json.loads(json_data)
