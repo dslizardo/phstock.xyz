@@ -31,7 +31,7 @@ def store_stocks():
 def retrieve_stocks():
     print("Getting new stocks " + str(datetime.datetime.now()))
     try:
-        r = requests.get(HOST + '?method=getSecuritiesAndIndicesForPublic&ajax=true', headers=HEADERS)
+        r = requests.get(HOST + '?method=getSecuritiesAndIndicesForPublic&ajax=true', headers=HEADERS, timeout=5)
         stocks = r.json()
         if len(stocks) != 0:
             price_as_of=stocks[0]['securityAlias']
