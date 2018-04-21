@@ -23,4 +23,7 @@ POSTGRES = {
 POSTGRES_URL = 'postgresql://%(user)s:\%(pw)s@%(host)s:%(port)s/%(db)s'
 
 #For development only
-CRON='* 9-16 * * 0-6'
+TICKER_CRON='* * * * *'
+
+#MAIL_CRON
+MAIL_CRON='30 17 * * 0-4'
