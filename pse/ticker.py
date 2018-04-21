@@ -24,7 +24,7 @@ job_defaults = {
 
 def store_stocks():
     scheduler = BackgroundScheduler(executors=executors, job_defaults=job_defaults)
-    scheduler.add_job(retrieve_stocks, CronTrigger.from_crontab(app.config['CRON']))
+    scheduler.add_job(retrieve_stocks, CronTrigger.from_crontab(app.config['TICKER_CRON']))
     scheduler.start()
 
 
